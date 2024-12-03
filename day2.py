@@ -19,7 +19,6 @@ def all_decreasing(levels):
 def condition2_satisfied(levels):
     arr = np.array(levels)
     diff = np.diff(arr)
-    print(f"diff: {diff}")
     for d in diff:
         d = abs(d)
         if d < 1 or d > 3:
@@ -44,11 +43,19 @@ def main():
     for report in input:
         levels = report.split(" ")
         levels = [int(numeric_string) for numeric_string in levels]
-        # print(f"{report}: {levels}")
-        # print(f"Condition 1: {condition1_satisfied(levels)}")
-        # print(f"Condition 2: {condition2_satisfied(levels)}")
+
+        safe_report = False
         if condition1_satisfied(levels) and condition2_satisfied(levels):
+            safe_report = True
+        else:
+            for idx, level in enumerate(levels):
+                lvl_copy = levels[:idx] + levels[idx+1 :]
+                if condition1_satisfied(lvl_copy) and condition2_satisfied(lvl_copy):
+                    safe_report = True  
+
+        if safe_report:
             safe_count += 1
+
     
     print(f"safe count: {safe_count}")
   

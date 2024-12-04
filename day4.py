@@ -117,6 +117,48 @@ def find_diagonal_matches(x):
 
     return matches
 
+def find_cross_mas(x):
+    matches = 0
+    for i in range(len(x)):
+        for j in range(len(x[i])):
+            # If we found an A, check for MAS
+            if x[i][j] == 'A':
+
+                cross_match1 = False                
+                if i-1 > -1 and j-1 > -1:
+                    # Check for M
+                    if x[i-1][j-1] == 'M':
+                        # Check for S
+                        if i+1 < len(x) and j+1 < len(x[j]):
+                            if x[i+1][j+1] == 'S':
+                                cross_match1 = True
+                    # Check for S
+                    elif x[i-1][j-1] == 'S':
+                        print(f"i is: {i}, j is: {j} - max is {len(x)},{len(x[j])}")
+                        # Check for M
+                        if i+1 < len(x) and j+1 < len(x[j]):
+                            if x[i+1][j+1] == 'M':
+                                cross_match1 = True
+
+                cross_match2 = False
+                if i+1 < len(x) and j-1 > -1:
+                    # Check for M
+                    if x[i+1][j-1] == 'M':
+                        # Check for S
+                        if i-1 > -1 and j+1 < len(x[j]):
+                            if x[i-1][j+1] == 'S':
+                                cross_match2 = True
+                    # Check for S
+                    elif x[i+1][j-1] == 'S':
+                    #     # Check for M
+                        if i-1 > -1 and j+1 < len(x[j]):
+                            if x[i-1][j+1] == 'M':
+                                cross_match2 = True                 
+
+                if cross_match1 and cross_match2:
+                    matches += 1
+    return matches
+
 def main():
     # Part 1
     input = get_input("4")
@@ -138,5 +180,8 @@ def main():
 
     # find ALL instances of XMAS
     print(f"TOTAL: {horizontal_total + vertical_total + diagonal_total}")
+
+    # find ALL instances of XMAS
+    print(f"find_cross_mas: {find_cross_mas(word_search)}")
 if __name__ == "__main__":
     main()

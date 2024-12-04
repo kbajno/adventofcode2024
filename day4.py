@@ -19,6 +19,17 @@ def find_vertical_matches(x):
             #     print(f'Skipping index {i} because i+3 is {i+3} and max len is {len(x)}')
 
     # backwards
+    for i in range(len(x)-1, -1, -1):
+        print(i)
+        # for j in range(len(x)):
+        #     # If we found an X, check for MAS
+        #     if i+3 < len(x):
+        #         if x[i][j] == 'X':
+        #             if x[i+1][j] == 'M':
+        #                 if x[i+2][j] == 'A':
+        #                     if x[i+3][j] == 'S':
+        #                         matches += 1
+
     return matches
  
 def find_horizontal_matches(x):

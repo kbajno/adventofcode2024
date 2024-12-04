@@ -22,7 +22,7 @@ def find_vertical_matches(x):
         # print(i)
         for j in range(len(x[i])):
             # If we found an X, check for MAS
-            if i-3 < -1:
+            if i-3 > -1:
                 if x[i][j] == 'X':
                     if x[i-1][j] == 'M':
                         if x[i-2][j] == 'A':
@@ -51,7 +51,7 @@ def find_horizontal_matches(x):
     for i in range(len(x)):
         for j in range(len(x)-1, -1, -1):
             # If we found an X, check for MAS
-            if j-3 < -1:
+            if j-3 > -1:
                 if x[i][j] == 'X':
                     if x[i][j-1] == 'M':
                         if x[i][j-2] == 'A':
@@ -80,7 +80,7 @@ def find_diagonal_matches(x):
     for i in range(len(x)-1, -1, -1):
         for j in range(len(x)-1, -1, -1):
             # If we found an X, check for MAS
-            if i-3 < -1 and j-3 < -1:
+            if i-3 > -1 and j-3 > -1:
                 if x[i][j] == 'X':
                     if x[i-1][j-1] == 'M':
                         if x[i-2][j-2] == 'A':
@@ -93,7 +93,7 @@ def find_diagonal_matches(x):
     for i in range(len(x)-1, -1, -1):
         for j in range(len(x[i])):
             # If we found an X, check for MAS
-            if i-3 < -1 and j+3 < len(x[i]):
+            if i-3 > -1 and j+3 < len(x[i]):
                 if x[i][j] == 'X':
                     if x[i-1][j+1] == 'M':
                         if x[i-2][j+2] == 'A':
@@ -106,7 +106,7 @@ def find_diagonal_matches(x):
     for i in range(len(x)):
         for j in range(len(x)-1, -1, -1):
             # If we found an X, check for MAS
-            if i+3 < len(x) and j-3 < -1:
+            if i+3 < len(x) and j-3 > -1:
                 if x[i][j] == 'X':
                     if x[i+1][j-1] == 'M':
                         if x[i+2][j-2] == 'A':

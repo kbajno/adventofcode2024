@@ -13,6 +13,12 @@ def orderRules(rules):
             orderedRules[numBefore] = [numAfter]
     return orderedRules
 
+def getCorrectUpdates(rules, pages):
+    splitPages = pages.split("\n")
+
+    for p in splitPages:
+        print(p)
+
 def main():
     input = get_input("5")
     splitInput = input.split("\n\n")
@@ -20,6 +26,9 @@ def main():
     pages = splitInput[1].rstrip()
 
     dictRules = orderRules(rules)
-    print(dictRules)
+    # print(dictRules)
+    updates = getCorrectUpdates(dictRules, pages)
+    # print(updates)
+
 if __name__ == "__main__":
     main()

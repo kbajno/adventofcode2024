@@ -1,11 +1,10 @@
 import unittest
 
-from day5 import orderRules
+from day5 import *
 
 class OrderRulesTest(unittest.TestCase):
 
-    def test_orderRulesReturnsProperDict(self):
-        input = """47|53
+    rulesInput = """47|53
 97|13
 97|61
 97|47
@@ -27,6 +26,15 @@ class OrderRulesTest(unittest.TestCase):
 75|13
 53|13"""
 
+    pagesInput = """75,47,61,53,29
+97,61,53,29,13
+75,29,13
+75,97,47,61,53
+61,13,29
+97,13,75,29,47
+"""
+
+    def test_orderRulesReturnsProperDict(self):
         expectedOutput = {
             "47": ["53", "13", "61", "29"],
             "97": ["13", "61", "47", "29", "53", "75"],
@@ -36,7 +44,13 @@ class OrderRulesTest(unittest.TestCase):
             "53": ["29", "13"]
         }
 
-        actualOutput = orderRules(input)
+        actualOutput = orderRules(self.rulesInput)
         self.assertEqual(expectedOutput, actualOutput)
 
+    def test_getCorrectUpdatesReturnsCorrectUpdates(self):
+        rules = orderRules(self.rulesInput)
+        
+        expectedOutput = ["75,47,61,53,29", "97,61,53,29,13","75,29,13"]
 
+        actualOutput = getCorrectUpdates(rules, self.pagesInput)
+        self.assertEqual(expectedOutput, actualOutput)

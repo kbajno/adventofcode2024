@@ -39,6 +39,10 @@ def getCorrectUpdates(rules, pages):
     
     return correctUpdates
 
+def calculateMiddleValueTotal(validUpdates):
+    total = 0
+    return total
+
 def main():
     input = get_input("5")
     splitInput = input.split("\n\n")

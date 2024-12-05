@@ -50,7 +50,7 @@ class OrderRulesTest(unittest.TestCase):
     def test_getCorrectUpdatesReturnsCorrectUpdates(self):
         rules = orderRules(self.rulesInput)
         
-        expectedOutput = ["75,47,61,53,29", "97,61,53,29,13","75,29,13"]
+        expectedOutput = [['75', '47', '61', '53', '29'], ['97', '61', '53', '29', '13'], ['75', '29', '13']]
 
         actualOutput = getCorrectUpdates(rules, self.pagesInput)
-        self.assertEqual(expectedOutput, actualOutput)
+        self.assertListEqual(expectedOutput, actualOutput)

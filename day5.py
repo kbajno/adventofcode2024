@@ -41,6 +41,10 @@ def getCorrectUpdates(rules, pages):
 
 def calculateMiddleValueTotal(validUpdates):
     total = 0
+
+    for update in validUpdates:
+        total += int(update[len(update)//2])
+
     return total
 
 def main():

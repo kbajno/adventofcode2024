@@ -64,14 +64,22 @@ def checkIfOrderIsValid(rules, update):
 def reorderIncorrectUpdates(rules, updates):
     ordered = []
     for u in updates:
-        print(u)
-        print(checkIfOrderIsValid(rules, u))
-        for idx, num in enumerate(u):
-            # verify the ordering is correct
-            if num in rules.keys():
-                rulesForNum = rules[num]
-                print(f"number {num}, must come before {rulesForNum}")
+        print(f"u: {u}")
+        validityArr = checkIfOrderIsValid(rules, u)
+        print(f"validityArr: {validityArr}")
+        copy_u = u
+        while(all(validityArr) == False):
+            invalid_index = validityArr.index(False)
+            numsItMustComeBefore = rules[copy_u[invalid_index]]
+            # make it right
+            # print(f"{copy_u[invalid_index]} must come before {numsItMustComeBefore}")
+            num1 = copy_u[invalid_index-1]
+            num2 = copy_u[invalid_index]
+            copy_u[invalid_index-1] = num2
+            copy_u[invalid_index] = num1
+            validityArr = checkIfOrderIsValid(rules, copy_u)
         
+        ordered.append(copy_u)
     return ordered
 
 def main():

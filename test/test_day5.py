@@ -74,7 +74,7 @@ class OrderRulesTest(unittest.TestCase):
             "29": ["13"],
             "53": ["29", "13"]
         }
-        expectedOutput = [['75','47','61','53','29'], ['97','61','53','29','13'], ['75','29','13']]
+        expectedOutput = [['97','75','47','61','53'], ['61','29','13'], ['97','75','47','29','13']]
 
         actualOutput = reorderIncorrectUpdates(rules, input)
         self.assertListEqual(expectedOutput, actualOutput)

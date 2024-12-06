@@ -54,9 +54,8 @@ def main():
     pages = splitInput[1].strip()
 
     dictRules = orderRules(rules)
-    # print(dictRules)
     updates = getCorrectUpdates(dictRules, pages)
-    # print(updates)
+    print(calculateMiddleValueTotal(updates))
 
 if __name__ == "__main__":
     main()

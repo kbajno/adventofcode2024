@@ -49,6 +49,11 @@ def calculateMiddleValueTotal(validUpdates):
 
     return total
 
+def reorderIncorrectUpdates(updates):
+    ordered = []
+    print(updates)
+    return ordered
+
 def main():
     input = get_input("5")
     splitInput = input.split("\n\n")
@@ -57,7 +62,11 @@ def main():
 
     dictRules = orderRules(rules)
     correctUpdates, incorrectUpdates = getCorrectUpdates(dictRules, pages)
-    print(calculateMiddleValueTotal(correctUpdates))
+    print(f"Correct updates total: {calculateMiddleValueTotal(correctUpdates)}")
+    # re-order incorrect updates
+    reorderedIncorrectUpdates = reorderIncorrectUpdates(incorrectUpdates)
+    # get middle total
+    print(f"Incorrect updates total: {calculateMiddleValueTotal(reorderedIncorrectUpdates)}")
 
 if __name__ == "__main__":
     main()

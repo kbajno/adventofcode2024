@@ -64,6 +64,21 @@ class OrderRulesTest(unittest.TestCase):
         self.assertListEqual(expectedCorrectOutput, actualCorrectOutput)
         self.assertListEqual(expectedIncorrectOutput, actualIncorrectOutput)
 
+    def test_reorderIncorrectUpdatesReturnsOrderedUpdates(self):
+        input = [['75','97','47','61','53'], ['61','13','29'], ['97','13','75','29','47']]
+        rules = {
+            "47": ["53", "13", "61", "29"],
+            "97": ["13", "61", "47", "29", "53", "75"],
+            "75": ["29", "53", "47", "61", "13"],
+            "61": ["13","53","29"],
+            "29": ["13"],
+            "53": ["29", "13"]
+        }
+        expectedOutput = [['75','47','61','53','29'], ['97','61','53','29','13'], ['75','29','13']]
+
+        actualOutput = reorderIncorrectUpdates(rules, input)
+        self.assertListEqual(expectedOutput, actualOutput)
+
     def test_calculateMiddleValueTotalReturnsCorrectTotal(self):
         validUpdates = [['75', '47', '61', '53', '29'], ['97', '61', '53', '29', '13'], ['75', '29', '13']]
 
@@ -71,3 +86,4 @@ class OrderRulesTest(unittest.TestCase):
 
         actualOutput = calculateMiddleValueTotal(validUpdates)
         self.assertEqual(expectedOutput, actualOutput)
+

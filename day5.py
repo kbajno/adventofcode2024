@@ -49,9 +49,29 @@ def calculateMiddleValueTotal(validUpdates):
 
     return total
 
-def reorderIncorrectUpdates(updates):
+def checkIfOrderIsValid(rules, update):
+    arr = []
+    for idx, num in enumerate(update):
+        if num in rules.keys():
+            rulesForNum = rules[num]
+            arr.append(all(x not in update[:idx] for x in rulesForNum))
+                # if all(x not in p[:idx] for x in rulesForNum) == False:
+                #     validPage = False
+        else:
+            arr.append(True)
+    return arr
+
+def reorderIncorrectUpdates(rules, updates):
     ordered = []
-    print(updates)
+    for u in updates:
+        print(u)
+        print(checkIfOrderIsValid(rules, u))
+        for idx, num in enumerate(u):
+            # verify the ordering is correct
+            if num in rules.keys():
+                rulesForNum = rules[num]
+                print(f"number {num}, must come before {rulesForNum}")
+        
     return ordered
 
 def main():
@@ -64,7 +84,7 @@ def main():
     correctUpdates, incorrectUpdates = getCorrectUpdates(dictRules, pages)
     print(f"Correct updates total: {calculateMiddleValueTotal(correctUpdates)}")
     # re-order incorrect updates
-    reorderedIncorrectUpdates = reorderIncorrectUpdates(incorrectUpdates)
+    reorderedIncorrectUpdates = reorderIncorrectUpdates(dictRules, incorrectUpdates)
     # get middle total
     print(f"Incorrect updates total: {calculateMiddleValueTotal(reorderedIncorrectUpdates)}")
 

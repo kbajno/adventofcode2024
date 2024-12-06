@@ -47,7 +47,7 @@ class OrderRulesTest(unittest.TestCase):
         actualOutput = orderRules(self.rulesInput)
         self.assertEqual(expectedOutput, actualOutput)
 
-    def test_getCorrectUpdatesReturnsCorrectUpdates(self):
+    def test_getCorrectUpdatesReturnsAccurateUpdates(self):
         rules = {
             "47": ["53", "13", "61", "29"],
             "97": ["13", "61", "47", "29", "53", "75"],
@@ -57,10 +57,12 @@ class OrderRulesTest(unittest.TestCase):
             "53": ["29", "13"]
         }
         
-        expectedOutput = [['75', '47', '61', '53', '29'], ['97', '61', '53', '29', '13'], ['75', '29', '13']]
+        expectedCorrectOutput = [['75', '47', '61', '53', '29'], ['97', '61', '53', '29', '13'], ['75', '29', '13']]
+        expectedIncorrectOutput = [['75','97','47','61','53'], ['61','13','29'], ['97','13','75','29','47']]
 
-        actualOutput = getCorrectUpdates(rules, self.pagesInput)
-        self.assertListEqual(expectedOutput, actualOutput)
+        actualCorrectOutput, actualIncorrectOutput = getCorrectUpdates(rules, self.pagesInput)
+        self.assertListEqual(expectedCorrectOutput, actualCorrectOutput)
+        self.assertListEqual(expectedIncorrectOutput, actualIncorrectOutput)
 
     def test_calculateMiddleValueTotalReturnsCorrectTotal(self):
         validUpdates = [['75', '47', '61', '53', '29'], ['97', '61', '53', '29', '13'], ['75', '29', '13']]

@@ -19,6 +19,7 @@ def getCorrectUpdates(rules, pages):
     individualPages = pages.strip().split("\n")
 
     correctUpdates = []
+    incorrectUpdates = []
     for page in individualPages:
         p = page.split(",")
         validPage = True
@@ -33,11 +34,12 @@ def getCorrectUpdates(rules, pages):
                     validPage = False
         
         if validPage:
-            # print(f"VALID PAGE: {p}")
             correctUpdates.append(p)
+        else:
+            incorrectUpdates.append(p)
 
     
-    return correctUpdates
+    return correctUpdates, incorrectUpdates
 
 def calculateMiddleValueTotal(validUpdates):
     total = 0
@@ -54,8 +56,8 @@ def main():
     pages = splitInput[1].strip()
 
     dictRules = orderRules(rules)
-    updates = getCorrectUpdates(dictRules, pages)
-    print(calculateMiddleValueTotal(updates))
+    correctUpdates, incorrectUpdates = getCorrectUpdates(dictRules, pages)
+    print(calculateMiddleValueTotal(correctUpdates))
 
 if __name__ == "__main__":
     main()

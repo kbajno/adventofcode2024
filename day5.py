@@ -27,9 +27,7 @@ def getCorrectUpdates(rules, pages):
             # verify the ordering is correct
             if num in rules.keys():
                 rulesForNum = rules[num]
-                # print(f"number {num}, must come before {rules[num]}")
                 # validate that no numbers in r come after the current index
-                # print(f"valid ordering: {all(x not in p[:idx] for x in rulesForNum)}")
                 if all(x not in p[:idx] for x in rulesForNum) == False:
                     validPage = False
         
@@ -55,8 +53,6 @@ def checkIfOrderIsValid(rules, update):
         if num in rules.keys():
             rulesForNum = rules[num]
             arr.append(all(x not in update[:idx] for x in rulesForNum))
-                # if all(x not in p[:idx] for x in rulesForNum) == False:
-                #     validPage = False
         else:
             arr.append(True)
     return arr
@@ -64,15 +60,11 @@ def checkIfOrderIsValid(rules, update):
 def reorderIncorrectUpdates(rules, updates):
     ordered = []
     for u in updates:
-        print(f"u: {u}")
         validityArr = checkIfOrderIsValid(rules, u)
-        print(f"validityArr: {validityArr}")
         copy_u = u
         while(all(validityArr) == False):
             invalid_index = validityArr.index(False)
-            numsItMustComeBefore = rules[copy_u[invalid_index]]
             # make it right
-            # print(f"{copy_u[invalid_index]} must come before {numsItMustComeBefore}")
             num1 = copy_u[invalid_index-1]
             num2 = copy_u[invalid_index]
             copy_u[invalid_index-1] = num2

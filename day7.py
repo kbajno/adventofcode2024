@@ -57,12 +57,30 @@ def main():
         op_spots = len(nums[i])-1
         print(f'Evaluating {i}: {nums[i]} - total_combinations: {total_combinations}')
 
+        # Eval all + combos
         ops = ['+'] * op_spots
         test_val = i
-        sum = evalOps(nums[i], ops)
-        print(f'test_val: {test_val} sum: {sum}')      
-        if compare(test_val,  sum):
-            true_vals.append(test_val)       
+        for combo in range(total_combinations):
+            sum = evalOps(nums[i], ops)
+            print(f'test_val: {test_val} sum: {sum}')      
+            if compare(test_val,  sum):
+                true_vals.append(test_val)  
+                break
+
+        # sum = evalOps(nums[i], ops)
+        # print(f'test_val: {test_val} sum: {sum}')      
+        # if compare(test_val,  sum):
+        #     true_vals.append(test_val)    
+
+        # for x in range(len(ops)):
+        
+        # # Eval all * combos
+        # ops = ['*'] * op_spots
+        # test_val = i
+        # sum = evalOps(nums[i], ops)
+        # print(f'test_val: {test_val} sum: {sum}')      
+        # if compare(test_val,  sum):
+        #     true_vals.append(test_val)      
 
     print(f'total calibration result: {getResult(true_vals)}')
 if __name__ == "__main__":

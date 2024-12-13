@@ -18,6 +18,7 @@ def evalOps(nums, op):
         cmd.append(o)
         cmd.append(nums[idx+1])
 
+    # if p == True:
     print(f'cmd to eval: {cmd}')
 
     total = 0
@@ -31,11 +32,11 @@ def evalOps(nums, op):
             cur_cmd.append(str(nums[idx+1]))
 
             exp = ''.join(cur_cmd)
-            print(exp)
+            # print(exp)
             eval_result = eval(exp)  
             total = eval_result
-            print(f"total: {total}")
-            print(f"cmd: {cur_cmd} total: {total}")
+            # print(f"total: {total}")
+            # print(f"cmd: {cur_cmd} total: {total}")
             
     return total
 
@@ -59,30 +60,33 @@ def getResult(true_vals):
 
 def multRecursion(idx, nums, ops, sum, true_vals):
     if idx == len(ops):
-        return true_vals
+        return None
     else:
         copy_ops = copy.deepcopy(ops)
         copy_ops[idx] = '*'
         eval_result = evalOps(nums, copy_ops)
+        
         if compare(eval_result, sum):
-            print(f'eval_result: {eval_result} sum: {sum}')      
+            print(f'eval_result: {eval_result} sum: {sum}')     
+            # print(f'We evaled: {evalOps(nums, copy_ops, True)}') 
             true_vals.append(eval_result)  
             print(f'true vals now: {true_vals}')
             return true_vals
-        multRecursion(idx+1, nums, ops, sum, true_vals)
+        else:
+            multRecursion(idx+1, nums, ops, sum, true_vals)
 
 
 def main():
-    # input = get_input("7")
-    input = """190: 10 19
-3267: 81 40 27
-83: 17 5
-156: 15 6
-7290: 6 8 6 15
-161011: 16 10 13
-192: 17 8 14
-21037: 9 7 18 13
-292: 11 6 16 20"""
+    input = get_input("7")
+#     input = """190: 10 19
+# 3267: 81 40 27
+# 83: 17 5
+# 156: 15 6
+# 7290: 6 8 6 15
+# 161011: 16 10 13
+# 192: 17 8 14
+# 21037: 9 7 18 13
+# 292: 11 6 16 20"""
 #     input = """190: 10 19
 # 3267: 81 40 27
 # """
@@ -94,6 +98,8 @@ def main():
         n = nums[i]
         sum = i
         print(f'Evaluating {sum}: {n}')
+        if int(sum) == 98830:
+            print('break')
 
         # Eval all + combos
         op_spots = len(nums[i])-1
@@ -101,6 +107,7 @@ def main():
         eval_result = evalOps(nums[i], ops)
         if compare(eval_result,  sum):
             print(f'eval_result: {eval_result} sum: {sum}')      
+            # print(f'We evaled: {evalOps(nums, ops,)}') 
             true_vals.append(eval_result)  
             print(f'true vals now: {true_vals}')
             continue

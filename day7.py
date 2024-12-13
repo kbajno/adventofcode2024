@@ -1,3 +1,4 @@
+import copy
 from util import get_input
 
 def addAll(nums):
@@ -18,7 +19,25 @@ def evalOps(nums, op):
         cmd.append(nums[idx+1])
 
     print(f'cmd to eval: {cmd}')
-    return eval(''.join(cmd))
+
+    total = 0
+    # print(f'nums: {nums}')
+    for idx, num in enumerate(nums):
+        if idx == (len(nums)-1):
+            break
+        else:
+            cur_cmd = [str(total) if idx > 0 else str(num)]
+            cur_cmd.append(str(op[idx]))
+            cur_cmd.append(str(nums[idx+1]))
+
+            exp = ''.join(cur_cmd)
+            print(exp)
+            eval_result = eval(exp)  
+            total = eval_result
+            print(f"total: {total}")
+            print(f"cmd: {cur_cmd} total: {total}")
+            
+    return total
 
 def constructNumsObj(input):
     nums = {}
@@ -37,6 +56,22 @@ def getResult(true_vals):
         total += int(val)
 
     return total
+
+def multRecursion(idx, nums, ops, sum, true_vals):
+    if idx == len(ops):
+        return true_vals
+    else:
+        copy_ops = copy.deepcopy(ops)
+        copy_ops[idx] = '*'
+        eval_result = evalOps(nums, copy_ops)
+        if compare(eval_result, sum):
+            print(f'eval_result: {eval_result} sum: {sum}')      
+            true_vals.append(eval_result)  
+            print(f'true vals now: {true_vals}')
+            return true_vals
+        multRecursion(idx+1, nums, ops, sum, true_vals)
+
+
 def main():
     # input = get_input("7")
     input = """190: 10 19
@@ -48,39 +83,42 @@ def main():
 192: 17 8 14
 21037: 9 7 18 13
 292: 11 6 16 20"""
-
+#     input = """190: 10 19
+# 3267: 81 40 27
+# """
     nums = constructNumsObj(input)
     true_vals = []
 
     for i in nums:
-        total_combinations = 2**(len(nums[i])-1)
-        op_spots = len(nums[i])-1
-        print(f'Evaluating {i}: {nums[i]} - total_combinations: {total_combinations}')
+
+        n = nums[i]
+        sum = i
+        print(f'Evaluating {sum}: {n}')
 
         # Eval all + combos
+        op_spots = len(nums[i])-1
         ops = ['+'] * op_spots
-        test_val = i
-        for combo in range(total_combinations):
-            sum = evalOps(nums[i], ops)
-            print(f'test_val: {test_val} sum: {sum}')      
-            if compare(test_val,  sum):
-                true_vals.append(test_val)  
-                break
+        eval_result = evalOps(nums[i], ops)
+        if compare(eval_result,  sum):
+            print(f'eval_result: {eval_result} sum: {sum}')      
+            true_vals.append(eval_result)  
+            print(f'true vals now: {true_vals}')
+            continue
 
-        # sum = evalOps(nums[i], ops)
-        # print(f'test_val: {test_val} sum: {sum}')      
-        # if compare(test_val,  sum):
-        #     true_vals.append(test_val)    
+        len_true_vals = len(true_vals)
+        multRecursion(0, nums[i], ops, sum, true_vals)
+        len_after = len(true_vals)
 
-        # for x in range(len(ops)):
-        
-        # # Eval all * combos
-        # ops = ['*'] * op_spots
-        # test_val = i
-        # sum = evalOps(nums[i], ops)
-        # print(f'test_val: {test_val} sum: {sum}')      
-        # if compare(test_val,  sum):
-        #     true_vals.append(test_val)      
+        if len_after > len_true_vals:
+            continue
+        for o in range(op_spots):
+            ops[o] = '*'
+            len_true_vals = len(true_vals)
+            multRecursion(0, nums[i], ops, sum, true_vals)
+            len_after = len(true_vals)
+
+            if len_after > len_true_vals:
+                continue
 
     print(f'total calibration result: {getResult(true_vals)}')
 if __name__ == "__main__":

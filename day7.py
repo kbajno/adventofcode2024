@@ -125,7 +125,7 @@ def main():
             len_after = len(true_vals)
 
             if len_after > len_true_vals:
-                continue
+                break
 
     print(f'total calibration result: {getResult(true_vals)}')
 if __name__ == "__main__":

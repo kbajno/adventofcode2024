@@ -101,7 +101,7 @@ def main():
         if int(sum) == 98830:
             print('break')
 
-        # Eval all + combos
+        # Go from + to *
         op_spots = len(nums[i])-1
         ops = ['+'] * op_spots
         eval_result = evalOps(nums[i], ops)
@@ -112,6 +112,7 @@ def main():
             print(f'true vals now: {true_vals}')
             continue
 
+        len_at_start = len(true_vals)
         len_true_vals = len(true_vals)
         multRecursion(0, nums[i], ops, sum, true_vals)
         len_after = len(true_vals)
@@ -126,7 +127,26 @@ def main():
 
             if len_after > len_true_vals:
                 break
+        len_at_mid = len(true_vals)
+        if len_at_mid > len_at_start:
+                continue   
+            
+        # go from * to +
+        ops = ['*'] * op_spots
+        len_true_vals = len(true_vals)
+        multRecursion(0, nums[i], ops, sum, true_vals)
+        len_after = len(true_vals)
 
+        if len_after > len_true_vals:
+            continue
+        for o in range(op_spots):
+            ops[o] = '+'
+            len_true_vals = len(true_vals)
+            multRecursion(0, nums[i], ops, sum, true_vals)
+            len_after = len(true_vals)
+
+            if len_after > len_true_vals:
+                break
     print(f'total calibration result: {getResult(true_vals)}')
 if __name__ == "__main__":
     main()
